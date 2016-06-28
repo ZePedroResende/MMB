@@ -12,9 +12,16 @@ import GHC.Generics
 import System.Time
 import Control.Concurrent.Timer.Lifted
 import Control.Concurrent.Suspend.Lifted
-import qualified Responses as R
 
 -- ||| Private Keys and Credentials
+data Tweet =
+  Tweet { text :: !Text,
+          id   :: Int
+          } deriving (Show, Generic)
+
+instance FromJSON Tweet
+instance ToJSON Tweet
+
 
 myoauth :: OAuth
 myoauth =
@@ -31,7 +38,7 @@ mycred = newCredential "445589918-gvtVkhK3W3akbUVrmtetRrEhzicGoLQvH4eBf6DV"
 
 -- | This function reads a timeline JSON and parse it using the 'Tweet' type.
 timeline :: String -- ^ Screen name of the user
-         -> IO (Either String [R.Tweet]) -- ^ If there is any error parsing the JSON data, it
+         -> IO (Either String [Tweet]) -- ^ If there is any error parsing the JSON data, it
                                        --   will return 'Left String', where the 'String'
                                        --   contains the error information.
 timeline name = do
@@ -49,7 +56,7 @@ timeline name = do
 
 -- | This function takes a string to tweet out and sends a POST reqeuest to do so.
 tweet :: String -- ^ String to tweet out
-         -> IO (Either String R.Tweet) -- ^ If there is any error parsing the JSON data, it
+         -> IO (Either String Tweet) -- ^ If there is any error parsing the JSON data, it
                                        --   will return 'Left String', where the 'String'
                                        --   contains the error information.
 tweet text = do
@@ -67,7 +74,7 @@ tweet text = do
   return $ eitherDecode $ responseBody res
 
 -- | The actual work done by the main function.
-main:: IO (Either String R.Tweet)
+main:: IO (Either String Tweet)
 main = do
   temp <- fmap show getCurrentTime
   --tempo <-currentTime
