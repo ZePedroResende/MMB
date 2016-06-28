@@ -1,3 +1,5 @@
+-- This code was originally writen by  Pranav Vishnu Ramabhadran
+-- visite him and the code at  : https://github.com/pvrnav/haskell-twitter-bot
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 import Data.ByteString (ByteString)
