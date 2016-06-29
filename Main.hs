@@ -26,10 +26,10 @@ data Tweet =
 instance FromJSON Tweet
 instance ToJSON Tweet
 
-consumerKey = "7VVG6ttV6ZN6xelFaDzLXAcVj"
-consumerSecret = "4qHVlXjbWeoEgfmjadTyf3K62Eaj9JaR5vi53IyA565GGss5z9"
-accessToken = "748188465800548352-TzwJU81OnXYX1a446gAPbRD3UCpXUNq"
-accessSecret = "lSBND9KrtBdARvcPteJ9V8p1f8rOTlhMSF2VyH0GORC9g"
+consumerKey = ""
+consumerSecret = ""
+accessToken = ""
+accessSecret = ""
 
 
 oauth :: OAuth
