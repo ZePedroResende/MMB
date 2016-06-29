@@ -1,4 +1,5 @@
 -- This code was originally writen by  Pranav Vishnu Ramabhadran
+-- I used, modified and rewrite some parts of it that lets you authenticate  your tweet
 -- visite him and the code at  : https://github.com/pvrnav/haskell-twitter-bot
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
