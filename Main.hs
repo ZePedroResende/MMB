@@ -18,8 +18,6 @@ import Control.Monad
 import qualified Data.Text    as Text
 import qualified Data.Text.IO as Text
 
-
--- ||| Private Keys and Credentials
 data Tweet =
   Tweet { text :: !Text,
           id   :: Int
@@ -28,43 +26,37 @@ data Tweet =
 instance FromJSON Tweet
 instance ToJSON Tweet
 
+consumerKey = "7VVG6ttV6ZN6xelFaDzLXAcVj"
+consumerSecret = "4qHVlXjbWeoEgfmjadTyf3K62Eaj9JaR5vi53IyA565GGss5z9"
+accessToken = "748188465800548352-TzwJU81OnXYX1a446gAPbRD3UCpXUNq"
+accessSecret = "lSBND9KrtBdARvcPteJ9V8p1f8rOTlhMSF2VyH0GORC9g"
 
-myoauth :: OAuth
-myoauth =
+
+oauth :: OAuth
+oauth =
   newOAuth { oauthServerName     = "api.twitter.com"
            , oauthConsumerKey    = consumerKey
            , oauthConsumerSecret = consumerSecret
              }
 
-mycred :: Credential
-mycred = newCredential accessToken
+cred :: Credential
+cred = newCredential accessToken
                        accessSecret
 
 
--- | This function takes a string to tweet out and sends a POST reqeuest to do so.
-tweet :: String -- ^ String to tweet out
-         -> IO (Either String Tweet) -- ^ If there is any error parsing the JSON data, it
-                                       --   will return 'Left String', where the 'String'
-                                       --   contains the error information.
-tweet text = do
-  -- Firstly, we create a HTTP request with method POST
-  req1 <- parseUrl $ "https://api.twitter.com/1.1/statuses/update.json"
-  let req = urlEncodedBody [("status", pack text)] req1 -- We need to use ByteStrings here
-  -- Using a HTTP manager, we authenticate the request and send it to get a response.
-  res <- withManager $ \m -> do
-           -- OAuth Authentication. 'signOAuth' modifies the HTTP header adding the
-           -- appropriate authentication.
-           signedreq <- signOAuth myoauth mycred req
-           -- Send request.
-           httpLbs signedreq m
-  -- Decode the response body.
+tweet :: String -> IO (Either String Tweet) 
+tweet text =  do
+  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/statuses/update.json"
+  let request = urlEncodedBody [("status", pack text)] requestUrl
+  manager <- newManager tlsManagerSettings 
+  signedrequest <- signOAuth oauth cred request
+  res <- httpLbs signedrequest manager
   return $ eitherDecode $ responseBody res
 
 
 
 
 
--- | The actual work done by the main function.
 main:: IO (Either String Tweet)
 main = do
   temp <- fmap show getCurrentTime -- current clock time 
