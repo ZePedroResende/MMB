@@ -1,2 +1,2 @@
 # MMB
-Small twitter client for cli writen in haskell
+Small twitter client for cli written in haskell
