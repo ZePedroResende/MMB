@@ -1,5 +1,3 @@
--- This code was originally writen by  Pranav Vishnu Ramabhadran
--- visite him and the code at  : https://github.com/pvrnav/haskell-twitter-bot
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
 import Data.ByteString (ByteString)
@@ -26,11 +24,6 @@ data Tweet =
 instance FromJSON Tweet
 instance ToJSON Tweet
 
-
-consumerKey = "d9CX3ozMNMDRsspXAmlvluBXg"
-consumerSecret = "mGrxjY8DwM6KjXiErFtJ9XfzjA2cnkjo3NlsZyZiE6fJ79uJx0"
-accessToken = "748188465800548352-eKXjTufV4X1gizRlr7FuWB7mq4Dpf8o"
-accessSecret = "dPj4VFByiWJBjEwMatzJa9KZxeJnn59hN7Eqm5KCbV5NO"
 
 
 oauth :: OAuth
