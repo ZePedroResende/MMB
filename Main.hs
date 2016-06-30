@@ -27,6 +27,12 @@ instance FromJSON Tweet
 instance ToJSON Tweet
 
 
+consumerKey = "d9CX3ozMNMDRsspXAmlvluBXg"
+consumerSecret = "mGrxjY8DwM6KjXiErFtJ9XfzjA2cnkjo3NlsZyZiE6fJ79uJx0"
+accessToken = "748188465800548352-eKXjTufV4X1gizRlr7FuWB7mq4Dpf8o"
+accessSecret = "dPj4VFByiWJBjEwMatzJa9KZxeJnn59hN7Eqm5KCbV5NO"
+
+
 oauth :: OAuth
 oauth =
   newOAuth { oauthServerName     = "api.twitter.com"
@@ -49,14 +55,14 @@ tweet text =  do
   return $ eitherDecode $ responseBody res
 
 
-dm :: String -> String -> IO(Either String [Tweet])
+dm :: String -> String -> IO(Either String Tweet)
 dm texto name = do
-  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/direct_messages/new.json"
-  let request = urlEncodedBody [("text", pack texto)] requestUrl
-  let request2 = urlEncodedBody [("&screen_name", pack name)] requestUrl
-  print request2
+  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/direct_messages/new.json?text=" ++ texto ++ "&screen_name=" ++ name
+  let request = urlEncodedBody [] requestUrl
+ -- let request2 = urlEncodedBody [("&screen_name", pack name)] request
+  --print request2
   manager <- newManager tlsManagerSettings
-  signedrequest <- signOAuth oauth cred request2
+  signedrequest <- signOAuth oauth cred request
   res <- httpLbs signedrequest manager
   return $ eitherDecode $ responseBody res 
 
