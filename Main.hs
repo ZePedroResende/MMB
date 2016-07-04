@@ -41,27 +41,9 @@ tweet text =  do
   let request = urlEncodedBody [("status", pack text)] requestUrl
   manager <- newManager tlsManagerSettings 
   signedrequest <- signOAuth oauth cred request
-  res <- httpLbs si:gnedrequest manager
+  res <- httpLbs signedrequest manager
   return $ eitherDecode $ responseBody res
 
-
-dm :: String -> String -> IO(Either String DM)
-dm texto name = do
-  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/direct_messages/new.json?text=" ++ texto ++ "&screen_name=" ++ name
-  let request = urlEncodedBody [] requestUrl -- transforma num POST 
-  manager <- newManager tlsManagerSettings
-  signedrequest <- signOAuth oauth cred request
-  res <- httpLbs signedrequest manager
-  return $ eitherDecode $ responseBody res 
-
-
-inbox :: IO(Either String [DM])
-inbox = do
-  request <- parseUrl $ "https://api.twitter.com/1.1/direct_messages.json"
-  manager <- newManager tlsManagerSettings
-  signedrequest <- signOAuth oauth cred request
-  res <- httpLbs signedrequest manager
-  return $ eitherDecode $ responseBody res 
 
 timeline :: String  -> IO (Either String [Tweet]) 
 timeline name = do
