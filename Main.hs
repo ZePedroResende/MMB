@@ -1,5 +1,6 @@
 {-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
 
+module Main where 
 import Data.ByteString (ByteString)
 import Data.ByteString.Char8 (pack)
 import Network.HTTP.Conduit
@@ -15,32 +16,23 @@ import Control.Concurrent.Suspend.Lifted
 import Control.Monad
 import qualified Data.Text    as Text
 import qualified Data.Text.IO as Text
+import DM
+
+data Users = 
+    Users{screen_name :: String} deriving(Show, Generic)
+
 
 data Tweet =
   Tweet { text :: !Text,
-          id   :: Int
+         retweeted :: Bool,
+         user :: Users
           } deriving (Show, Generic)
 
+instance FromJSON Users
+instance ToJSON Users
 instance FromJSON Tweet
 instance ToJSON Tweet
 
-consumerKey = ""
-consumerSecret = ""
-accessToken = ""
-accessSecret = ""
-
-
-
-oauth :: OAuth
-oauth =
-  newOAuth { oauthServerName     = "api.twitter.com"
-           , oauthConsumerKey    = consumerKey
-           , oauthConsumerSecret = consumerSecret
-             }
-
-cred :: Credential
-cred = newCredential accessToken
-                       accessSecret
 
 
 tweet :: String -> IO (Either String Tweet) 
@@ -49,23 +41,21 @@ tweet text =  do
   let request = urlEncodedBody [("status", pack text)] requestUrl
   manager <- newManager tlsManagerSettings 
   signedrequest <- signOAuth oauth cred request
-  res <- httpLbs signedrequest manager
+  res <- httpLbs si:gnedrequest manager
   return $ eitherDecode $ responseBody res
 
 
-dm :: String -> String -> IO(Either String Tweet)
+dm :: String -> String -> IO(Either String DM)
 dm texto name = do
   requestUrl <- parseUrl $ "https://api.twitter.com/1.1/direct_messages/new.json?text=" ++ texto ++ "&screen_name=" ++ name
-  let request = urlEncodedBody [] requestUrl
- -- let request2 = urlEncodedBody [("&screen_name", pack name)] request
-  --print request2
+  let request = urlEncodedBody [] requestUrl -- transforma num POST 
   manager <- newManager tlsManagerSettings
   signedrequest <- signOAuth oauth cred request
   res <- httpLbs signedrequest manager
   return $ eitherDecode $ responseBody res 
 
 
-inbox :: IO(Either String [Tweet])
+inbox :: IO(Either String [DM])
 inbox = do
   request <- parseUrl $ "https://api.twitter.com/1.1/direct_messages.json"
   manager <- newManager tlsManagerSettings
@@ -73,7 +63,13 @@ inbox = do
   res <- httpLbs signedrequest manager
   return $ eitherDecode $ responseBody res 
 
-
+timeline :: String  -> IO (Either String [Tweet]) 
+timeline name = do
+      request <- parseUrl $ "https://api.twitter.com/1.1/usertimeline.json?screen_name=" ++ name
+      manager <- newManager tlsManagerSettings
+      signedrequest <- signOAuth oauth cred request
+      res <- httpLbs signedrequest manager
+      return $ eitherDecode $ responseBody res 
 
 
 
