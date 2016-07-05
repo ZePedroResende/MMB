@@ -2,7 +2,7 @@
 Small twitter client for cli written in haskell
 
 
-Cabal dependencies 
+#Cabal dependencies 
 -----------------------------------------------------------------------
 >http-conduit
 
@@ -14,7 +14,7 @@ Cabal dependencies
 
 >Control.Concurrent.Suspend.Lifted
 
-How to setup
+#How to setup
 -------------------------------------------------------------------------
  You need:
   1 - twitter account bounded to a cell phone number 
@@ -27,7 +27,7 @@ How to setup
   
   5 - cabal install http-conduit authenticate-oauth old-time timers Control.Concurrent.Suspend.Lifted
 
-How to use 
+#How to use 
 ----------------------------------------------------------------------------
 Theres different ways to use this client :
  
@@ -51,4 +51,7 @@ Theres different ways to use this client :
   
   
   
-          
+
+#Notes
+This program is very very simple and was mostly written for a better understanding of IO in haskell 
+
