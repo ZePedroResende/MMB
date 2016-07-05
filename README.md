@@ -57,5 +57,6 @@ Theres different ways to use this client :
   
 
 #Notes
-This program is very very simple and was mostly written for a better understanding of IO in haskell , http in haskell and the twitter api
+This program at first was a bot , but then for my needs it evolved to a small client 
+This is very very simple and was mostly written for a better understanding of IO in haskell , http in haskell and the twitter api
 
