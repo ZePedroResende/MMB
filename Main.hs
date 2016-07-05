@@ -35,14 +35,22 @@ instance ToJSON Tweet
 
 
 
-tweet :: String -> IO (Either String Tweet) 
+tweet :: String -> IO (Either String Tweet) -- caso o  requeste nao tenha erros e seja aceite devolve a parte direita da string , se nao da o erro na parte esquerda da string 
 tweet text =  do
-  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/statuses/update.json"
-  let request = urlEncodedBody [("status", pack text)] requestUrl
-  manager <- newManager tlsManagerSettings 
-  signedrequest <- signOAuth oauth cred request
-  res <- httpLbs signedrequest manager
-  return $ eitherDecode $ responseBody res
+  requestUrl <- parseUrl $ "https://api.twitter.com/1.1/statuses/update.json" -- o url de requeste da API do twitter 
+  let request = urlEncodedBody [("status", pack text)] requestUrl -- pack text transforma a msg numa byteString (unicode) 
+  -- e altera o url de forma a ter a msg , isto podia ser facilmente substituido por um ++ na string de cima 
+  -- A funçao urlEncodedBody transforma o requeste no metodo POST em vez do GET , isto esta definido na API qual o
+  -- metodo que de ser utilizado
+  manager <- newManager tlsManagerSettings -- http manager , a sua utilizaçao e descrito na documentaçao na net
+  signedrequest <- signOAuth oauth cred request -- com as credenciais dadas na api vai auntenticar o request acima definido 
+  res <- httpLbs signedrequest manager -- com o manager vai vai fazer o pedido 
+  return $ eitherDecode $ responseBody res -- se a resposta for bem sucedido vai ter um tweet com a msg , se é ou nao é retweet
+  -- se tiver um erro vai receber os erros dados na api . E facil conferir isto utilizando um  nick falso 
+
+-- Esta decomentaçao pode ser facilmente aplicada ao resto do codigo , sendo que quando nao temos a funçao
+-- urlEncodedBody pode ser considerada um requeste com o metodo GET 
+-- Existe tambem outro tipo de data "DM " utilizado para DM e pode ser encontrado no modulo DM.hs 
 
 
 timeline :: String  -> IO (Either String [Tweet]) 
