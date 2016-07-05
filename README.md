@@ -19,13 +19,15 @@ Small twitter client for cli written in haskell
  You need:
   1 - twitter account bounded to a cell phone number 
   
-  2 - API keys that you get at [dev.twitter.com] 
+  2 - API keys that you get at dev.twitter.com
   
-  3 - ghci installed (if you are in windows you probable need a c compiler) 
+  3 - Put the keys in the file DM.hs in each corresponding camp 
   
-  4 - cabal update 
+  4 - ghci installed (if you are in windows you probable need a c compiler) 
   
-  5 - cabal install http-conduit authenticate-oauth old-time timers Control.Concurrent.Suspend.Lifted
+  5 - cabal update 
+  
+  6 - cabal install http-conduit authenticate-oauth old-time timers Control.Concurrent.Suspend.Lifted
 
 #How to use 
 ----------------------------------------------------------------------------
