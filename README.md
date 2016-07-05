@@ -7,5 +7,5 @@ Cabal dependencies
 >http-conduit
 >authenticate-oauth 
 >old-time
->timers  
+>timers 
 >Control.Concurrent.Suspend.Lifted
