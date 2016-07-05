@@ -53,5 +53,5 @@ Theres different ways to use this client :
   
 
 #Notes
-This program is very very simple and was mostly written for a better understanding of IO in haskell 
+This program is very very simple and was mostly written for a better understanding of IO in haskell , http in haskell and the twitter api
 
