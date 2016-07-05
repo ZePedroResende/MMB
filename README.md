@@ -28,6 +28,8 @@ Small twitter client for cli written in haskell
   5 - cabal update 
   
   6 - cabal install http-conduit authenticate-oauth old-time timers Control.Concurrent.Suspend.Lifted
+  
+  7 - ghci Main.hs for calling function  or ghc Main.hs for scripting 
 
 #How to use 
 ----------------------------------------------------------------------------
