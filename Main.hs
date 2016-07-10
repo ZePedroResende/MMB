@@ -55,12 +55,11 @@ tweet text =  do
 
 timeline :: String  -> IO (Either String [Tweet]) 
 timeline name = do
-      request <- parseUrl $ "https://api.twitter.com/1.1/usertimeline.json?screen_name=" ++ name
+      request <- parseUrl $ "https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=" ++ name
       manager <- newManager tlsManagerSettings
       signedrequest <- signOAuth oauth cred request
       res <- httpLbs signedrequest manager
       return $ eitherDecode $ responseBody res 
-
 
 
 main:: IO ()
