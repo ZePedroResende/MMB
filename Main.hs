@@ -63,9 +63,39 @@ timeline name = do
 
 
 
-main:: IO (Either String Tweet)
+main:: IO ()
+main = do
+  putStrLn " 1)Tweet\n 2)Timeline\n 3)DM\n 4)Inbox\n"
+  numero <- readLn
+  case numero of
+      1 -> do
+          putStrLn "frase\n"
+          frase <- getLine
+          tweet frase 
+          return ()
+      2 -> do 
+          putStrLn "nome\n"
+          nome <- getLine
+          timeline nome
+          return ()
+      3 -> do
+          putStrLn "frase\n"
+          frase <- getLine
+          putStrLn "nome\n"
+          nome <- getLine
+          dm frase nome
+          return ()
+      4 -> do
+          inbox
+          return ()
+      otherwise -> do
+          putStrLn "Invalido"
+ 
+
+{-main:: IO (Either String Tweet)
 main = do
   temp <- fmap show getCurrentTime -- current clock time 
   frase <- getLine
   tweet $ temp ++ " " ++ frase
   -- tweet frase
+-}
