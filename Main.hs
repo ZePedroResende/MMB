@@ -65,7 +65,7 @@ timeline name = do
 
 main:: IO ()
 main = do
-  putStrLn " 1)Tweet\n 2)Timeline\n 3)DM\n 4)Inbox\n"
+  putStrLn " 1) Tweet\n 2) Timeline\n 3) DM\n 4) Inbox\n"
   numero <- readLn
   case numero of
       1 -> do
